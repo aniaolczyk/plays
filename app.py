@@ -277,7 +277,7 @@ def plays():
     spotify = spotipy.Spotify(auth_manager=auth_manager)
     user_name = spotify.me()["display_name"]
     current_device_id = spotify.devices()["devices"][0]["id"]
-    # TODO make this conditional 
+    # TODO check if playlist exists
     playlist = create_random_ania_alt_playlist_with_tracks(spotify, f"Ania dla {user_name}")
     spotify.start_playback(device_id=current_device_id, context_uri=playlist["uri"])
     spotify.repeat("context")
