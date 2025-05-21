@@ -29,6 +29,14 @@ Run app.py
 # One way(more work) is to implement multiple session using https://github.com/pallets-eco/flask-session
 # Another is to run 6 instances of this, and Add /plays endpoint that will refresh and do next() every 40 seconds.
 
+#
+# Konfiguracja
+# Idziemy do plays.onrender.com
+# Logujemy się do spotify i dajemy permissions
+# Odtwarzamy cos na telefonie
+# Patrzymy czy zmienia.
+# /random tworzy ALT Playlisty
+#
 
 import jinja2
 import os
@@ -164,6 +172,7 @@ def playlists():
 
 @app.route('/random')
 def random_():
+    ania_uris = ['spotify:track:3g87eKym3fy8V4R6SRwX4o', 'spotify:track:422Uq4fEQTN7yKTgAIT1r0', 'spotify:track:3g87eKym3fy8V4R6SRwX4o', 'spotify:track:4ceFqwXDVpeswyYMHL1g06', 'spotify:track:3g87eKym3fy8V4R6SRwX4o',]
     cache_handler = spotipy.cache_handler.FlaskSessionCacheHandler(session)
     auth_manager = spotipy.oauth2.SpotifyOAuth(cache_handler=cache_handler)
     if not auth_manager.validate_token(cache_handler.get_cached_token()):
