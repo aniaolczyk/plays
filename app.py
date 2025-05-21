@@ -100,7 +100,7 @@ def get_artists_singles(uri):
 ania_uris = ['spotify:track:3g87eKym3fy8V4R6SRwX4o', 'spotify:track:422Uq4fEQTN7yKTgAIT1r0', 'spotify:track:4ceFqwXDVpeswyYMHL1g06']
 #####
 alt_id = '4KbJ2Zd2Cy7xRXBBrfNGL5'
-# alt_uris = get_playlist_items_uris("4KbJ2Zd2Cy7xRXBBrfNGL5")
+alt_uris = get_playlist_items_uris("4KbJ2Zd2Cy7xRXBBrfNGL5")
 
 # print(ania_uris)
 # print(alt_uris)
