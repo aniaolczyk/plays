@@ -305,7 +305,17 @@ def plays():
                 logging.warning("received stop, bye.")
                 break
             logging.warning("playing next")
-            client.next_track()
+            resp = spotify.current_user_playing_track()
+            logging.info("resp", resp)
+            success = False
+            try:
+                if resp['item']['album']['artists'][0]['uri'] != ania_uri:
+                    client.next_track()
+                    success = True
+            except:
+                logging.info("error", resp)
+            if not success:
+                client.next_track()
             time.sleep(35)
         stop_thread_logging(thread_log_handler)
     thread_name = 'Thread-{}'.format(user_name)
