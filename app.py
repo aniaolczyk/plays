@@ -89,8 +89,9 @@ def get_artists_singles(uri):
     return return_list
 
 # ania_uris = get_artists_singles(ania_uri)
-ania_uris = ['spotify:track:422Uq4fEQTN7yKTgAIT1r0', 'spotify:track:4ceFqwXDVpeswyYMHL1g06']
+ania_uris = ['spotify:track:3g87eKym3fy8V4R6SRwX4o', 'spotify:track:422Uq4fEQTN7yKTgAIT1r0', 'spotify:track:4ceFqwXDVpeswyYMHL1g06']
 #####
+alt_id = '4KbJ2Zd2Cy7xRXBBrfNGL5'
 # alt_uris = get_playlist_items_uris("37i9dQZF1DWTAMSh8IEIUc")
 
 # print(ania_uris)
@@ -103,10 +104,10 @@ def create_playlist_with_tracks(sp, user_id, name, track_uris):
     pid = playlist["id"]
     sp.user_playlist_add_tracks(user_id, pid, track_uris)
     return playlist
-
+#4KbJ2Zd2Cy7xRXBBrfNGL5
 def create_random_ania_alt_playlist_with_tracks(sp, name):
     ania_uris = ['spotify:track:422Uq4fEQTN7yKTgAIT1r0', 'spotify:track:4ceFqwXDVpeswyYMHL1g06']
-    alt_uris = get_playlist_items_uris("37i9dQZF1DWTAMSh8IEIUc")
+    alt_uris = get_playlist_items_uris(alt_id)
     user_id = sp.me()["id"]
     # playlist = create_playlist_with_tracks(sp, user_id, name, alt_uris[:5] + ania_uris + ania_uris)
     playlist = create_playlist_with_tracks(sp, user_id, name, mix(random.sample(alt_uris, 20), ania_uris, 3))

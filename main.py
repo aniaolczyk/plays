@@ -34,7 +34,7 @@ def get_artists_singles(uri):
     return return_list
 
 ania_uris = get_artists_singles(ania_uri)
-alt_top_uri="37i9dQZF1DWTAMSh8IEIUc"
+alt_top_uri="4KbJ2Zd2Cy7xRXBBrfNGL5"
 x="6LUZL8RoQ3J2Ynn3MuPTyA"
 alt_uris = get_playlist_items_uris(alt_top_uri)
 
