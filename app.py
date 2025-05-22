@@ -97,7 +97,7 @@ def get_artists_singles(uri):
     return return_list
 
 def get_user_playlist(client: spotipy.Spotify):
-    playlists = client.user_playlists()
+    playlists = client.current_user_playlists()
     for p in playlists:
         if "Ania Olczyk" in p["name"]:
             return p["uri"]
@@ -176,6 +176,22 @@ def playlists():
 
     spotify = spotipy.Spotify(auth_manager=auth_manager)
     return spotify.current_user_playlists()
+
+
+# @app.route('/clear_playlists')
+# def clear_playlists():
+#     cache_handler = spotipy.cache_handler.FlaskSessionCacheHandler(session)
+#     auth_manager = spotipy.oauth2.SpotifyOAuth(cache_handler=cache_handler)
+#     if not auth_manager.validate_token(cache_handler.get_cached_token()):
+#         return redirect('/')
+
+#     spotify = spotipy.Spotify(auth_manager=auth_manager)
+#     playlists = spotify.user_playlists()
+#     count = 0
+#     for p in playlists:
+#         if "Ania Olczyk" in p["name"]:
+#             spotify.
+#     return spotify.current_user_playlists()
 
 @app.route('/random')
 def random_():
