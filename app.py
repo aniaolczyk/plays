@@ -60,8 +60,8 @@ import json
 from spotipy.oauth2 import SpotifyClientCredentials
 
 
-client_id = "5a7259409c1d48dd8497ff52f0786e5a"
-client_secret = "3791625e9fa74e279eeb2876a396bf3f"
+client_id = os.environ.get("SPOTIPY_CLIENT_ID")
+client_secret = os.environ.get("SPOTIPY_CLIENT_SECRET")
 
 ania_uri = 'spotify:artist:1AfgDOc4Q0Z7LZpdQbU49y'
 spotify = spotipy.Spotify(client_credentials_manager=SpotifyClientCredentials(client_id=client_id, client_secret=client_secret))
