@@ -96,6 +96,13 @@ def get_artists_singles(uri):
         return_list.append(i['uri'])
     return return_list
 
+def get_user_playlist(client: spotipy.Spotify):
+    playlists = client.user_playlists()
+    for p in playlists:
+        if "Ania Olczyk" in p["name"]:
+            return p["uri"]
+
+
 # ania_uris = get_artists_singles(ania_uri)
 ania_uris = ['spotify:track:3g87eKym3fy8V4R6SRwX4o', 'spotify:track:422Uq4fEQTN7yKTgAIT1r0', 'spotify:track:4ceFqwXDVpeswyYMHL1g06']
 #####
@@ -114,7 +121,7 @@ def create_playlist_with_tracks(sp, user_id, name, track_uris):
     return playlist
 #4KbJ2Zd2Cy7xRXBBrfNGL5
 def create_random_ania_alt_playlist_with_tracks(sp, name):
-    ania_uris = ['spotify:track:3g87eKym3fy8V4R6SRwX4o', 'spotify:track:422Uq4fEQTN7yKTgAIT1r0', 'spotify:track:4ceFqwXDVpeswyYMHL1g06']
+    ania_uris = ['spotify:track:3g87eKym3fy8V4R6SRwX4o', 'spotify:track:422Uq4fEQTN7yKTgAIT1r0', 'spotify:track:3g87eKym3fy8V4R6SRwX4o', 'spotify:track:4ceFqwXDVpeswyYMHL1g06', 'spotify:track:3g87eKym3fy8V4R6SRwX4o']
     alt_uris = get_playlist_items_uris(alt_id)
     user_id = sp.me()["id"]
     # playlist = create_playlist_with_tracks(sp, user_id, name, alt_uris[:5] + ania_uris + ania_uris)
@@ -290,7 +297,9 @@ def plays():
     user_name = spotify.me()["display_name"]
     current_device_id = spotify.devices()["devices"][0]["id"]
     # TODO check if playlist exists
-    playlist = create_random_ania_alt_playlist_with_tracks(spotify, f"Ania dla {user_name}")
+    playlist = get_user_playlist(spotify)
+    if not playlist:
+        playlist = create_random_ania_alt_playlist_with_tracks(spotify, f"Ania dla {user_name}")
     spotify.start_playback(device_id=current_device_id, context_uri=playlist["uri"])
     spotify.repeat("context")
     spotify.user_playlist_change_details(spotify.me()["id"], playlist["id"], public=False)
@@ -304,7 +313,7 @@ def plays():
             if stop():
                 logging.warning("received stop, bye.")
                 break
-            logging.warning("playing next")
+            logging.warning("playing next: " + str(spotify.current_user()))
             resp = spotify.current_user_playing_track()
             logging.info("resp", resp)
             success = False
@@ -312,15 +321,15 @@ def plays():
             if len(devices):
                 current_device_id = devices[0]["id"]
             else:
-                logging.warning("no device found", spotify.current_user())
-                return
+                logging.warning("no device found user: " + str(spotify.current_user()))
+                continue
             try:
                 
                 if resp['item']['album']['artists'][0]['uri'] != ania_uri:
                     client.next_track()
                     success = True
             except:
-                logging.info("error", resp)
+                logging.info("error: " + str(resp))
             if not success:
                 client.next_track()
             time.sleep(35)
