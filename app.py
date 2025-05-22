@@ -355,6 +355,28 @@ def next():
     a = spotify.next_track()
     return a
 
+@app.route('/next_check')
+def next_check():
+    cache_handler = spotipy.cache_handler.FlaskSessionCacheHandler(session)
+    auth_manager = spotipy.oauth2.SpotifyOAuth(cache_handler=cache_handler)
+    if not auth_manager.validate_token(cache_handler.get_cached_token()):
+        return redirect('/')
+    spotify = spotipy.Spotify(auth_manager=auth_manager)
+    resp = spotify.current_user_playing_track()
+    logging.info("resp", resp)
+    success = False
+    a = ''
+    try:
+        if resp['item']['album']['artists'][0]['uri'] != ania_uri:
+            a = spotify.next_track()
+            success = True
+    except:
+        logging.info("error", resp)
+    if not success:
+        a = spotify.next_track()
+    return a
+
+
 @app.route('/me')
 def me():
     cache_handler = spotipy.cache_handler.FlaskSessionCacheHandler(session)
