@@ -308,7 +308,14 @@ def plays():
             resp = spotify.current_user_playing_track()
             logging.info("resp", resp)
             success = False
+            devices = spotify.devices()["devices"]
+            if len(devices):
+                current_device_id = devices[0]["id"]
+            else:
+                logging.warning("no device found", spotify.current_user())
+                return
             try:
+                
                 if resp['item']['album']['artists'][0]['uri'] != ania_uri:
                     client.next_track()
                     success = True
