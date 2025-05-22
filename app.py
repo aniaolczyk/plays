@@ -98,7 +98,7 @@ def get_artists_singles(uri):
 
 def get_user_playlist(client: spotipy.Spotify):
     playlists = client.current_user_playlists()
-    for p in playlists:
+    for p in playlists["items"]:
         if "Ania Olczyk" in p["name"]:
             return p["uri"]
 
