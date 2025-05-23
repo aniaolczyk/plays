@@ -311,7 +311,12 @@ def plays():
         return redirect('/')
     spotify = spotipy.Spotify(auth_manager=auth_manager)
     user_name = spotify.me()["display_name"]
-    current_device_id = spotify.devices()["devices"][0]["id"]
+    devices = spotify.devices()["devices"]
+    if len(devices):
+        current_device_id = devices[0]["id"]
+    else:
+        logging.warning("no device found user: " + str(spotify.current_user()))
+        return render_template('index.html', user_name=spotify.me()["display_name"], message="Najpierw pusz jakas piosenke :)")
     # TODO check if playlist exists
     playlist = get_user_playlist(spotify)
     if not playlist:
